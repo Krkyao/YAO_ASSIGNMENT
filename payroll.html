@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 4: Simple Payroll</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #0078d7;
+            color: white;
+            text-align: center;
+            padding: 1.5em 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            color: #0078d7;
+        }
+
+        input {
+            padding: 0.5em;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 0.5em;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: white;
+            background-color: #0078d7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .results {
+            margin-top: 1em;
+            padding: 1em;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Assignment 4: Simple Payroll</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Payroll Calculator</h2>
+            <label for="name">Employee Name:</label>
+            <input type="text" id="name" placeholder="Enter employee name">
+
+            <label for="hoursWorked">Hours Worked:</label>
+            <input type="number" id="hoursWorked" placeholder="Enter hours worked" min="0">
+
+            <label for="hourlyRate">Hourly Rate:</label>
+            <input type="number" id="hourlyRate" placeholder="Enter hourly rate" min="0" step="0.01">
+
+            <label for="taxRate">Tax Rate (%):</label>
+            <input type="number" id="taxRate" placeholder="Enter tax rate" min="0" max="100" step="0.01">
+
+            <button onclick="calculatePayroll()">Calculate</button>
+            <div id="error" class="error"></div>
+            <div id="results" class="results"></div>
+        </section>
+    </main>
+    <script>
+        function calculatePayroll() {
+            const name = document.getElementById("name").value;
+            const hoursWorked = parseFloat(document.getElementById("hoursWorked").value);
+            const hourlyRate = parseFloat(document.getElementById("hourlyRate").value);
+            const taxRate = parseFloat(document.getElementById("taxRate").value);
+
+            const errorDiv = document.getElementById("error");
+            const resultsDiv = document.getElementById("results");
+
+            errorDiv.innerHTML = "";
+            resultsDiv.innerHTML = "";
+
+            if (!name || isNaN(hoursWorked) || isNaN(hourlyRate) || isNaN(taxRate) || hoursWorked < 0 || hourlyRate < 0 || taxRate < 0 || taxRate > 100) {
+                errorDiv.textContent = "Please enter valid inputs for all fields.";
+                return;
+            }
+
+            // Calculate gross pay, tax amount, and net pay
+            const grossPay = hoursWorked * hourlyRate;
+            const taxAmount = (taxRate / 100) * grossPay;
+            const netPay = grossPay - taxAmount;
+
+            // Display results
+            resultsDiv.innerHTML = `
+                <p><strong>Employee Name:</strong> ${name}</p>
+                <p><strong>Gross Pay:</strong> $${grossPay.toFixed(2)}</p>
+                <p><strong>Tax Amount:</strong> $${taxAmount.toFixed(2)}</p>
+                <p><strong>Net Pay:</strong> $${netPay.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

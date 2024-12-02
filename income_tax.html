@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 2: Income Tax Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #0078d7;
+            color: white;
+            text-align: center;
+            padding: 1.5em 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            color: #0078d7;
+        }
+
+        input {
+            padding: 0.5em;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 0.5em;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: white;
+            background-color: #0078d7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .results {
+            margin-top: 1em;
+            padding: 1em;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Assignment 2: Income Tax Calculator</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Income Tax Calculator</h2>
+            <label for="income">Enter Annual Income:</label>
+            <input type="number" id="income" placeholder="Enter your income" min="0">
+
+            <button onclick="calculateTax()">Calculate</button>
+            <div id="error" class="error"></div>
+            <div id="results" class="results"></div>
+        </section>
+    </main>
+    <script>
+        function calculateTax() {
+            const income = parseFloat(document.getElementById("income").value);
+            const errorDiv = document.getElementById("error");
+            const resultsDiv = document.getElementById("results");
+
+            errorDiv.innerHTML = "";
+            resultsDiv.innerHTML = "";
+
+            if (isNaN(income) || income < 0) {
+                errorDiv.textContent = "Please enter a valid income amount.";
+                return;
+            }
+
+            let tax = 0;
+
+            // Simple tax brackets (example)
+            if (income <= 25000) {
+                tax = 0; // No tax for income <= 25000
+            } else if (income <= 50000) {
+                tax = (income - 25000) * 0.10; // 10% tax for income between 25001 and 50000
+            } else if (income <= 100000) {
+                tax = (25000 * 0.10) + ((income - 50000) * 0.20); // 20% tax for income between 50001 and 100000
+            } else {
+                tax = (25000 * 0.10) + (50000 * 0.20) + ((income - 100000) * 0.30); // 30% tax for income above 100000
+            }
+
+            // Display results
+            resultsDiv.innerHTML = `
+                <p><strong>Annual Income:</strong> $${income.toFixed(2)}</p>
+                <p><strong>Income Tax:</strong> $${tax.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

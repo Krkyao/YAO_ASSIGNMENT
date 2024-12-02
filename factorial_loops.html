@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 3: Loop Calculations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #0078d7;
+            color: white;
+            text-align: center;
+            padding: 1.5em 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            color: #0078d7;
+        }
+
+        input[type="number"] {
+            padding: 0.5em;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 0.5em;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: white;
+            background-color: #0078d7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .results {
+            margin-top: 1em;
+            padding: 1em;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Assignment 3: Loop Calculations</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Factorial, Sum, and Average Calculator</h2>
+            <label for="numberInput">Enter a positive integer (N):</label>
+            <input type="number" id="numberInput" min="1" max="170" placeholder="Enter N" required>
+            <button onclick="calculateResults()">Calculate</button>
+            <div id="error" class="error"></div>
+            <div id="results" class="results"></div>
+        </section>
+    </main>
+    <script>
+        function calculateResults() {
+            const numberInput = document.getElementById("numberInput");
+            const resultsDiv = document.getElementById("results");
+            const errorDiv = document.getElementById("error");
+            const N = parseInt(numberInput.value);
+
+            resultsDiv.innerHTML = "";
+            errorDiv.innerHTML = "";
+
+            if (isNaN(N) || N < 1 || N > 170) {
+                errorDiv.textContent = "Please enter a valid number between 1 and 170.";
+                return;
+            }
+
+            // Factorial using while loop
+            let factorial = 1;
+            let i = 1;
+            while (i <= N) {
+                factorial *= i;
+                i++;
+            }
+
+            // Sum using do-while loop
+            let sum = 0;
+            let j = 1;
+            do {
+                sum += j;
+                j++;
+            } while (j <= N);
+
+            // Average using for loop
+            let average = 0;
+            for (let k = 1; k <= N; k++) {
+                average = sum / N;
+            }
+
+            // Display results
+            resultsDiv.innerHTML = `
+                <p>Results for N = ${N}:</p>
+                <ul>
+                    <li><strong>Factorial:</strong> ${factorial}</li>
+                    <li><strong>Sum:</strong> ${sum}</li>
+                    <li><strong>Average:</strong> ${average.toFixed(2)}</li>
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>
